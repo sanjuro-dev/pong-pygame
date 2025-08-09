@@ -2,7 +2,7 @@
 
 🎮 Uma recriação do clássico jogo Pong utilizando Python e Pygame.
 
-![Pong Pygame](https://github.com/sanjuro-dev/pong-pygame/raw/main/screenshot.png)
+![Pong Pygame](https://github.com/sanjuro-dev/pong-pygame/screenshot.png)
 
 ## 📋 Descrição
 
