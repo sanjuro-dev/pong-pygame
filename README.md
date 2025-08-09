@@ -49,7 +49,7 @@ O objetivo é evitar que a bola ultrapasse seu paddle e marcar pontos ao fazer a
 
 ## 📸 Captura de Tela
 
-![Captura de Tela do Jogo](https://github.com/sanjuro-dev/pong-pygame/raw/main/screenshot.png)
+![Captura de Tela do Jogo](https://github.com/sanjuro-dev/pong-pygame/blob/master/screenshot.png)
 
 ## 📄 Licença
 
