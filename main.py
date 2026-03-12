@@ -57,87 +57,87 @@ class Ball():
             self.xvel = -4  
             self.yvel = 4
             player1.score += 1
-            play_score_sound()  # Toca som de pontuação
+            play_score_sound()  
             print(f"Player 1: {player1.score}")
-            return  # Evita verificações adicionais após reiniciar a bola
+            return  
 
         if self.xpos < 0:
             self.xpos = WIDTH/2
             self.ypos = HEIGHT/2
             player2.ypos = HEIGHT/2
             player1.ypos = HEIGHT/2
-            self.xvel = 4  # Direção oposta ao último jogador que pontuou
+            self.xvel = 4  
             self.yvel = 4
             player2.score += 1
-            play_score_sound()  # Toca som de pontuação
+            play_score_sound()  
             print(f"Player 2: {player2.score}")
-            return  # Evita verificações adicionais após reiniciar a bola
+            return  
 
-        # Colisão com as bordas superior e inferior
+        # Border colision
         if self.ypos > HEIGHT - self.radius:
             self.yvel = -self.yvel
-            self.ypos = HEIGHT - self.radius  # Corrige a posição para evitar que a bola saia da tela
-            play_hit_sound()  # Som de colisão com a borda
+            self.ypos = HEIGHT - self.radius  
+            play_hit_sound()  
         if self.ypos < self.radius:
             self.yvel = -self.yvel
-            self.ypos = self.radius  # Corrige a posição para evitar que a bola saia da tela
-            play_hit_sound()  # Som de colisão com a borda
+            self.ypos = self.radius  
+            play_hit_sound()  
         
 
 
-        # Colisão com os jogadores - melhorada para considerar a posição da bola e o raio
-        # Colisão com o jogador 1 (esquerda)
+        # Player collision
+        
+        # Player 1 collision
         if (self.xpos - self.radius <= player1.xpos + player1.size[0] and 
             self.xpos + self.radius >= player1.xpos and 
             self.ypos + self.radius >= player1.ypos and 
             self.ypos - self.radius <= player1.ypos + player1.size[1]):
             
-            # Se a bola está se movendo para a esquerda
+            # Moving left
             if self.xvel < 0:
-                # Calcula o impacto baseado na posição relativa da bola na raquete
+                
                 impacto = ((self.ypos - (player1.ypos + player1.size[1]/2)) / (player1.size[1]/2)) * 2
                 
-                # Inverte a direção horizontal e adiciona variação baseada na posição de impacto
-                self.xvel = abs(self.xvel) + 0.2  # Aumenta levemente a velocidade a cada rebatida
-                self.yvel = self.yvel + impacto  # Ajusta a direção vertical baseado no ponto de impacto
+                # Inverts ball velocity
+                self.xvel = abs(self.xvel) + 0.2  
+                self.yvel = self.yvel + impacto  
                 
-                # Limita a velocidade máxima
+                # Velocity limit
                 if self.xvel > 10:
                     self.xvel = 10
                 if abs(self.yvel) > 8:
                     self.yvel = 8 * (1 if self.yvel > 0 else -1)
                     
-                # Garante que a bola não fique presa na raquete
+                # Fixing ball pos
                 self.xpos = player1.xpos + player1.size[0] + self.radius
                 
-                # Toca som de colisão
                 play_hit_sound()
 
-        # Colisão com o jogador 2 (direita)
+        # Player 2 colision
         if (self.xpos - self.radius <= player2.xpos + player2.size[0] and 
             self.xpos + self.radius >= player2.xpos and 
             self.ypos + self.radius >= player2.ypos and 
             self.ypos - self.radius <= player2.ypos + player2.size[1]):
             
-            # Se a bola está se movendo para a direita
+            # Moving right
             if self.xvel > 0:
-                # Calcula o impacto baseado na posição relativa da bola na raquete
+
                 impacto = ((self.ypos - (player2.ypos + player2.size[1]/2)) / (player2.size[1]/2)) * 2
                 
-                # Inverte a direção horizontal e adiciona variação baseada na posição de impacto
-                self.xvel = -abs(self.xvel) - 0.2  # Aumenta levemente a velocidade a cada rebatida
-                self.yvel = self.yvel + impacto  # Ajusta a direção vertical baseado no ponto de impacto
+                # Inverts ball velocity
+                self.xvel = -abs(self.xvel) - 0.2 
+                self.yvel = self.yvel + impacto  
                 
-                # Limita a velocidade máxima
+                # Velocity limit
                 if abs(self.xvel) > 10:
                     self.xvel = -10
                 if abs(self.yvel) > 8:
                     self.yvel = 8 * (1 if self.yvel > 0 else -1)
                     
-                # Garante que a bola não fique presa na raquete
+                # Fixing ball pos
                 self.xpos = player2.xpos - self.radius
                 
-                # Toca som de colisão
+
                 play_hit_sound()
     def desenhar(self, tela):
 
@@ -170,7 +170,7 @@ pygame.init()
 HEIGHT = 600
 WIDTH = 800
 
-# Cores
+# Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (0, 0, 255)
@@ -178,16 +178,16 @@ RED = (255, 0, 0)
 
 GRAY = (200, 200, 200)
 
-# Inicialização da fonte para o placar
+# Font
 pygame.font.init()
 font = pygame.font.Font(os.path.dirname(__file__) + "/rainyhearts.ttf", 50)
 
 
 
-# Inicialização de sons
+# Sounds
 pygame.mixer.init()
 
-# Criação de sons simples
+
 def play_hit_sound():
     hit = pygame.mixer.Sound(os.path.dirname(__file__) + "/hit.wav")
     hit.play()
@@ -210,7 +210,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        # Adiciona opção de reiniciar o jogo com a tecla R
+        # Restart with R key
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
                 player1.score = 0
@@ -222,28 +222,28 @@ while running:
     
     screen.fill(WHITE)
     
-    # Desenha a linha central
+    # Central line
     for y in range(0, HEIGHT, 30):
         pygame.draw.rect(screen, GRAY, (WIDTH/2 - 5, y, 10, 15))
     
-    # Atualiza e desenha os jogadores
+
     player1.mover(pygame.key.get_pressed())
     player2.mover(pygame.key.get_pressed())
     player1.desenhar(screen)
     player2.desenhar(screen)
     
-    # Atualiza e desenha a bola
+
     ball.mover()
     ball.desenhar(screen)
     
-    # Desenha o placar
+
     score1_text = font.render(str(player1.score), True, BLACK)
     score2_text = font.render(str(player2.score), True, BLACK)
     screen.blit(score1_text, (WIDTH/4, 20))
     screen.blit(score2_text, (WIDTH*3/4, 20))
     
-    # Instruções
-    instructions = pygame.font.Font(os.path.dirname(__file__) + "/rainyhearts.ttf", 26).render("Player 1: Setas | Player 2: W/S | Reiniciar: R", True, GRAY)
+    # Instructions
+    instructions = pygame.font.Font(os.path.dirname(__file__) + "/rainyhearts.ttf", 26).render("Player 1: Arrows | Player 2: W/S | Restart: R", True, GRAY)
     screen.blit(instructions, (WIDTH/2 - instructions.get_width()/2, HEIGHT - 30))
     
     clock.tick(60)
