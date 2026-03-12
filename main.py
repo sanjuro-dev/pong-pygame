@@ -12,7 +12,7 @@ init_sound()
 clock = pygame.time.Clock()
 running = True
 
-pygame.display.set_icon(pygame.image.load(path.dirname(__file__) + "/bola.png"))
+pygame.display.set_icon(pygame.image.load(path.dirname(__file__) + "/assets/bola.png"))
 
 while running:
     for event in pygame.event.get():
