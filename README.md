@@ -19,7 +19,7 @@ It was developed using the Pygame library and serves as a simple introduction to
 
 ## Requirements
 
-- Python 3.x
+- Python 3.x(3.12 and above)
 - Pygame
 
 ## Installation
