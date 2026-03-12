@@ -14,7 +14,7 @@ class Player():
         self.WASD = WASD
 
 
-    def mover(self, teclas):
+    def moving(self, teclas):
         if self.WASD:
             if teclas[pygame.K_w] and self.ypos > 0:
                 self.ypos -= self.velocity
@@ -28,7 +28,7 @@ class Player():
 
 
         
-    def desenhar(self, tela):
+    def drawing(self, tela):
         pygame.draw.rect(tela, self.color, (self.xpos, self.ypos, self.size[0],self.size[1]))
 
     
@@ -43,7 +43,7 @@ class Ball():
         self.yvel = 4
         self.radius = 25
 
-    def mover(self):
+    def moving(self):
         self.xpos += self.xvel
         self.ypos += self.yvel
 
@@ -139,7 +139,7 @@ class Ball():
                 
 
                 play_hit_sound()
-    def desenhar(self, tela):
+    def drawing(self, tela):
 
         textura = pygame.image.load(os.path.dirname(__file__) + "/bola.png")
         textura = pygame.transform.scale(textura, (self.radius*2, self.radius*2))
@@ -227,14 +227,14 @@ while running:
         pygame.draw.rect(screen, GRAY, (WIDTH/2 - 5, y, 10, 15))
     
 
-    player1.mover(pygame.key.get_pressed())
-    player2.mover(pygame.key.get_pressed())
-    player1.desenhar(screen)
-    player2.desenhar(screen)
+    player1.moving(pygame.key.get_pressed())
+    player2.moving(pygame.key.get_pressed())
+    player1.drawing(screen)
+    player2.drawing(screen)
     
 
-    ball.mover()
-    ball.desenhar(screen)
+    ball.moving()
+    ball.drawing(screen)
     
 
     score1_text = font.render(str(player1.score), True, BLACK)
