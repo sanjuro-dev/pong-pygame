@@ -1,210 +1,18 @@
+from os import path
 import pygame
-from random import randint
-import os
-
-class Player():
-    def __init__(self, xpos, ypos, color, WASD=False):
-
-        self.xpos = xpos
-        self.ypos = ypos
-        self.velocity = 5
-        self.color = color
-        self.size = (25, 100)
-        self.score = 0
-        self.WASD = WASD
-
-
-    def moving(self, teclas):
-        if self.WASD:
-            if teclas[pygame.K_w] and self.ypos > 0:
-                self.ypos -= self.velocity
-            if teclas[pygame.K_s] and self.ypos < HEIGHT - self.size[1]:
-                self.ypos += self.velocity
-        else:
-            if teclas[pygame.K_UP] and self.ypos > 0:
-                self.ypos -= self.velocity
-            if teclas[pygame.K_DOWN] and self.ypos < HEIGHT - self.size[1]:
-                self.ypos += self.velocity
-
-
-        
-    def drawing(self, tela):
-        pygame.draw.rect(tela, self.color, (self.xpos, self.ypos, self.size[0],self.size[1]))
-
-    
-
-class Ball():
-    def __init__(self, xpos, ypos, color):
-        self.xpos = xpos
-        self.ypos = ypos
-        self.velocity = 5
-        self.color = color
-        self.xvel = 4
-        self.yvel = 4
-        self.radius = 25
-
-    def moving(self):
-        self.xpos += self.xvel
-        self.ypos += self.yvel
-
-        if self.xpos > WIDTH:
-            self.xpos = WIDTH/2
-            self.ypos = HEIGHT/2
-            player2.ypos = HEIGHT/2
-            player1.ypos = HEIGHT/2
-
-
-            self.xvel = -4  
-            self.yvel = 4
-            player1.score += 1
-            play_score_sound()  
-            print(f"Player 1: {player1.score}")
-            return  
-
-        if self.xpos < 0:
-            self.xpos = WIDTH/2
-            self.ypos = HEIGHT/2
-            player2.ypos = HEIGHT/2
-            player1.ypos = HEIGHT/2
-            self.xvel = 4  
-            self.yvel = 4
-            player2.score += 1
-            play_score_sound()  
-            print(f"Player 2: {player2.score}")
-            return  
-
-        # Border colision
-        if self.ypos > HEIGHT - self.radius:
-            self.yvel = -self.yvel
-            self.ypos = HEIGHT - self.radius  
-            play_hit_sound()  
-        if self.ypos < self.radius:
-            self.yvel = -self.yvel
-            self.ypos = self.radius  
-            play_hit_sound()  
-        
-
-
-        # Player collision
-        
-        # Player 1 collision
-        if (self.xpos - self.radius <= player1.xpos + player1.size[0] and 
-            self.xpos + self.radius >= player1.xpos and 
-            self.ypos + self.radius >= player1.ypos and 
-            self.ypos - self.radius <= player1.ypos + player1.size[1]):
-            
-            # Moving left
-            if self.xvel < 0:
-                
-                impacto = ((self.ypos - (player1.ypos + player1.size[1]/2)) / (player1.size[1]/2)) * 2
-                
-                # Inverts ball velocity
-                self.xvel = abs(self.xvel) + 0.2  
-                self.yvel = self.yvel + impacto  
-                
-                # Velocity limit
-                if self.xvel > 10:
-                    self.xvel = 10
-                if abs(self.yvel) > 8:
-                    self.yvel = 8 * (1 if self.yvel > 0 else -1)
-                    
-                # Fixing ball pos
-                self.xpos = player1.xpos + player1.size[0] + self.radius
-                
-                play_hit_sound()
-
-        # Player 2 colision
-        if (self.xpos - self.radius <= player2.xpos + player2.size[0] and 
-            self.xpos + self.radius >= player2.xpos and 
-            self.ypos + self.radius >= player2.ypos and 
-            self.ypos - self.radius <= player2.ypos + player2.size[1]):
-            
-            # Moving right
-            if self.xvel > 0:
-
-                impacto = ((self.ypos - (player2.ypos + player2.size[1]/2)) / (player2.size[1]/2)) * 2
-                
-                # Inverts ball velocity
-                self.xvel = -abs(self.xvel) - 0.2 
-                self.yvel = self.yvel + impacto  
-                
-                # Velocity limit
-                if abs(self.xvel) > 10:
-                    self.xvel = -10
-                if abs(self.yvel) > 8:
-                    self.yvel = 8 * (1 if self.yvel > 0 else -1)
-                    
-                # Fixing ball pos
-                self.xpos = player2.xpos - self.radius
-                
-
-                play_hit_sound()
-    def drawing(self, tela):
-
-        textura = pygame.image.load(os.path.dirname(__file__) + "/bola.png")
-        textura = pygame.transform.scale(textura, (self.radius*2, self.radius*2))
-
-
-        circulo = pygame.Surface((self.radius*2, self.radius*2), pygame.SRCALPHA)
-        pygame.draw.circle(circulo, (255, 255, 255), (self.radius, self.radius), self.radius)
-
-        circulo.blit(textura, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        tela.blit(circulo, (self.xpos - self.radius, self.ypos - self.radius))
-
-
-    
-
-
-
-
-
-    
-
-
-
-
-    
+from settings import init_fonts, WIDTH, HEIGHT, WHITE, GRAY, BLACK, screen, font
+from player import player1, player2
+from ball import ball
+from sounds import init_sound
 
 pygame.init()
+init_fonts()
+init_sound()
 
-HEIGHT = 600
-WIDTH = 800
-
-# Colors
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-BLUE = (0, 0, 255)
-RED = (255, 0, 0)
-
-GRAY = (200, 200, 200)
-
-# Font
-pygame.font.init()
-font = pygame.font.Font(os.path.dirname(__file__) + "/rainyhearts.ttf", 50)
-
-
-
-# Sounds
-pygame.mixer.init()
-
-
-def play_hit_sound():
-    hit = pygame.mixer.Sound(os.path.dirname(__file__) + "/hit.wav")
-    hit.play()
-
-def play_score_sound():
-    score = pygame.mixer.Sound(os.path.dirname(__file__) + "/score.wav")
-    score.play()
-
-player1 = Player(100, HEIGHT/2 - 50, BLUE, False)
-player2 = Player(WIDTH - 125, HEIGHT/2 - 50, RED, True)
-ball = Ball(WIDTH/2, HEIGHT/2, BLACK)
-
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 running = True
 
-pygame.display.set_icon(pygame.image.load(os.path.dirname(__file__) + "/bola.png"))
+pygame.display.set_icon(pygame.image.load(path.dirname(__file__) + "/bola.png"))
 
 while running:
     for event in pygame.event.get():
@@ -243,7 +51,7 @@ while running:
     screen.blit(score2_text, (WIDTH*3/4, 20))
     
     # Instructions
-    instructions = pygame.font.Font(os.path.dirname(__file__) + "/rainyhearts.ttf", 26).render("Player 1: Arrows | Player 2: W/S | Restart: R", True, GRAY)
+    instructions = pygame.font.Font(path.dirname(__file__) + "/assets/rainyhearts.ttf", 26).render("Player 1: Arrows | Player 2: W/S | Restart: R", True, GRAY)
     screen.blit(instructions, (WIDTH/2 - instructions.get_width()/2, HEIGHT - 30))
     
     clock.tick(60)
