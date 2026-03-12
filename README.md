@@ -1,57 +1,68 @@
+
 # Pong Pygame
 
-Uma recriação do clássico jogo Pong utilizando Python e Pygame.
+A recreation of the classic Pong game using Python and Pygame.
 
-<img src="https://github.com/sanjuro-dev/pong-pygame/blob/master/bola.png?raw=true" width="25">
+<img src="https://github.com/sanjuro-dev/pong-pygame/blob/master/assets/bola.png?raw=true" width="25">
 
-##  Descrição
+## Description
 
-Este projeto implementa o tradicional jogo Pong, onde dois jogadores controlam paddles para rebater a bola e marcar pontos. Desenvolvido com a biblioteca Pygame, é uma excelente introdução ao desenvolvimento de jogos em Python.
+This project implements the classic Pong game where two players control paddles to bounce the ball and score points.  
+It was developed using the Pygame library and serves as a simple introduction to game development with Python.
 
-##  Funcionalidades
+## Features
 
-* **Modo 2 jogadores**: Controle os paddles com as teclas `W` e `S` para o Jogador 1, e as setas para cima e para baixo para o Jogador 2.
-* **Pontuação**: O primeiro jogador a alcançar 10 pontos vence a partida.
-* **Interface simples**: Design minimalista com pontuação exibida na tela.
+- **Two-player mode** – Player 1 uses `W` and `S`, Player 2 uses the `Arrow Up` and `Arrow Down` keys.
+- **Score system** – The first player to reach 10 points wins the match.
+- **Minimalist interface** – Clean layout with on-screen score display.
+- **Sound effects** – Ball hits and score events play audio feedback.
 
-##  Requisitos
+## Requirements
 
-* Python 3.x
-* Pygame
+- Python 3.x
+- Pygame
 
-## Instalação
+## Installation
 
-1. Clone o repositório:
+Clone the repository:
 
-   ```bash
-   git clone https://github.com/sanjuro-dev/pong-pygame.git
-   cd pong-pygame
-   ```
+```bash
+git clone https://github.com/sanjuro-dev/pong-pygame.git
+cd pong-pygame
+````
 
-2. Instale o Pygame:
+Install the dependencies:
 
-   ```bash
-   pip install pygame
-   ```
+```bash
+pip install pygame
+```
 
-3. Execute o jogo:
+Run the game:
 
-   ```bash
-   python main.py
-   ```
+```bash
+python main.py
+```
 
-## Como Jogar
+## Controls
 
-* **Jogador 1**: Use as teclas `W` (para cima) e `S` (para baixo).
-* **Jogador 2**: Use as setas para cima e para baixo.
+Player 1
 
-O objetivo é evitar que a bola ultrapasse seu paddle e marcar pontos ao fazer a bola passar pelo paddle adversário.
+* `W` – Move paddle up
+* `S` – Move paddle down
 
-## Captura de Tela
+Player 2
 
-![Captura de Tela do Jogo](https://github.com/sanjuro-dev/pong-pygame/blob/master/screenshot.png)
+* `↑` – Move paddle up
+* `↓` – Move paddle down
 
-## Licença
+Restart game
 
-Este projeto é licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+* `R` – Reset the score and ball position
 
+## Screenshot
+
+![Game Screenshot](https://github.com/sanjuro-dev/pong-pygame/blob/master/screenshot.png)
+
+## License
+
+This project is open source and available under the MIT License.
