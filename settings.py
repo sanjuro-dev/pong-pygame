@@ -13,9 +13,13 @@ RED = (255, 0, 0)
 GRAY = (200, 200, 200)
 
 # Fonts
-font = font.Font(path.dirname(__file__) + "/assets/rainyhearts.ttf", 50)
 def init_fonts():
     font.init()
+
+init_fonts()
+font = font.Font(path.dirname(__file__) + "/assets/rainyhearts.ttf", 50)
+
+
 
 screen = display.set_mode((WIDTH, HEIGHT))
 

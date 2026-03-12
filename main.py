@@ -6,7 +6,6 @@ from ball import ball
 from sounds import init_sound
 
 pygame.init()
-init_fonts()
 init_sound()
 
 clock = pygame.time.Clock()
